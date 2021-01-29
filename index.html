@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="./styles/default.css" >
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <h1 class="appTitle">Library.me</h1>
+
+        <div class="formWrap">
+            <form id="bookform">
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" placeholder="Title"/>
+    
+                <label for="author">Author: </label>
+                <input type="text" name="author" id="author" placeholder="Author"/>
+    
+                <label for="pages">No. of Pages: </label>
+                <input type="number" id="pages" name="pages" />
+    
+                <label for="readstatus">Have you read it yet? </label>
+                <select name="readstatus" id="readstatus" form="bookform">
+                    <option value="read">Read</option>
+                    <option value="notread" selected>Not Read</option>
+                </select>
+    
+                <input type="submit" id="submit" value="Add book"/>
+            </form>
+        </div>
+        
+
+        
+    </div>
+</body>
+
+
+
+
+
+
+</html>
