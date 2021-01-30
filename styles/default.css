@@ -5,12 +5,18 @@ body {
     box-sizing: border-box;
 }
 
+h3 {
+    font-size: 24px;
+}
 .appTitle {
     font-family: 'Open Sans', sans-serif;
+    font-size: 40px;
 }
 
 .formWrap {
     width: 350px;
+    border: 1px solid;
+    padding: 10px;
 }
 
 input[type=text], input[type=number], select{
@@ -28,7 +34,7 @@ label {
 }
 
 #pages {
-    width: 50px;
+    width: 100px;
 }
 
 #submit {
