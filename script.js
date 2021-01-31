@@ -27,7 +27,6 @@ function addNewBook(e){
     e.preventDefault();
 
     addEntryToLibrary(createNewBook());
-    console.log(myLibrary);
 }
 
 function addEntryToLibrary(newEntry) {
@@ -39,31 +38,64 @@ function addEntryToLibrary(newEntry) {
             return false;
         default:
             myLibrary.push(newEntry);
+            saveToLocal();
     }
 
-    
+    renderBookToLibrary(newEntry);
 
-    /* const entry = new Book(title, author, pages, readStatus)
-    
-    myLibrary.push(entry);
 
-    const entry_serialized = JSON.stringify(entry);
+}
 
-    localStorage.setItem(`${title}`, entry_serialized)
+function removeFromLibrary(bookToRemove) {
+    myLibrary = myLibrary.filter((book) => book.title !== bookToRemove);
+}
 
-    const entry_deserialized = JSON.parse(localStorage.getItem(`${title}`));
+//Render Book Collection
+const collection = document.getElementById('collection');
 
-    console.log(localStorage) */
+function updateCollection() {
+    resetCollection();
+    for(let el of myLibrary){
+        renderBookToLibrary(el)
+    }
+}
+
+function resetCollection() {
+    collection.innerHTML = '';
 }
 
 
+function renderBookToLibrary(book) {
+    const bookWrap = document.createElement('div');
+    const title = document.createElement('h1');
+    const author = document.createElement('h3');
+    const pages = document.createElement('h3');
+    const readStatus = document.createElement('h3');
 
-function showCollection(title) {
-    const collection = document.getElementById('collection');
-    
-    for(let i = 0; i < localStorage.length; i++) {
-        collection.innerHTML = `Title of book: ${localStorage.getItem(`${title}`)} by .author}.`
-    }
+    title.textContent = book.title;
+    author.textContent = book.author;
+    pages.textContent = `${book.pages} pages`;
+    readStatus.textContent = book.readStatus;
+
+
+    bookWrap.appendChild(title);
+    bookWrap.appendChild(author);
+    bookWrap.appendChild(pages);
+    bookWrap.appendChild(readStatus);
+    collection.appendChild(bookWrap);
 }
+
 
 form.addEventListener('submit', addNewBook);
+
+//Update Local Storage
+function saveToLocal() {
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
+function restoreLocal() {
+    myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+    updateCollection();
+}
+
+restoreLocal()
