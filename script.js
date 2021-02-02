@@ -1,6 +1,7 @@
 //Global Variables
 let myLibrary = [];
 const form = document.getElementById('bookform');
+const removeBtn = document.getElementById('removeBtn');
 const renderCollection = localStorage.setItem('collectionEntry', `Title of book: ${''} by ${''}.`);
 
 //Book Object
@@ -26,7 +27,8 @@ function createNewBook() {
 function addNewBook(e){
     e.preventDefault();
 
-    addEntryToLibrary(createNewBook());
+    addEntryToLibrary(createNewBook())
+    updateCollection();
 }
 
 function addEntryToLibrary(newEntry) {
@@ -42,12 +44,12 @@ function addEntryToLibrary(newEntry) {
     }
 
     renderBookToLibrary(newEntry);
-
-
 }
 
 function removeFromLibrary(bookToRemove) {
     myLibrary = myLibrary.filter((book) => book.title !== bookToRemove);
+    saveToLocal()
+    updateCollection()
 }
 
 //Render Book Collection
@@ -71,22 +73,32 @@ function renderBookToLibrary(book) {
     const author = document.createElement('h3');
     const pages = document.createElement('h3');
     const readStatus = document.createElement('h3');
+    const removeBtn = document.createElement('button');
 
     title.textContent = book.title;
     author.textContent = book.author;
     pages.textContent = `${book.pages} pages`;
     readStatus.textContent = book.readStatus;
 
+    removeBtn.classList.add('btn');
+    removeBtn.setAttribute('id', 'removeBtn');
+    removeBtn.innerHTML = 'Remove Entry';
 
     bookWrap.appendChild(title);
     bookWrap.appendChild(author);
     bookWrap.appendChild(pages);
     bookWrap.appendChild(readStatus);
+    bookWrap.appendChild(removeBtn);
     collection.appendChild(bookWrap);
 }
 
-
+//Event Listeners
 form.addEventListener('submit', addNewBook);
+document.addEventListener('click', function(e){
+    if(e.target && e.target.id == 'removeBtn'){
+        removeFromLibrary(e.target.parentNode.firstChild.innerHTML)
+    }
+});
 
 //Update Local Storage
 function saveToLocal() {
@@ -95,6 +107,7 @@ function saveToLocal() {
 
 function restoreLocal() {
     myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+    if(myLibrary == null) myLibrary = [];
     updateCollection();
 }
 
