@@ -33,15 +33,9 @@ function addNewBook(e){
 
 function addEntryToLibrary(newEntry) {
 
-    const { title } = newEntry.title;
-
-    switch(newEntry){
-        case myLibrary.find(book => book.title === title):
-            return false;
-        default:
-            myLibrary.push(newEntry);
-            saveToLocal();
-    }
+    if(myLibrary.find(book => book.title === newEntry.title)) return false;
+    myLibrary.push(newEntry);
+    saveToLocal();
 
     renderBookToLibrary(newEntry);
 }
@@ -73,12 +67,25 @@ function renderBookToLibrary(book) {
     const author = document.createElement('h3');
     const pages = document.createElement('h3');
     const readStatus = document.createElement('h3');
+    const readBtn = document.createElement('button');
     const removeBtn = document.createElement('button');
 
     title.textContent = book.title;
     author.textContent = book.author;
     pages.textContent = `${book.pages} pages`;
     readStatus.textContent = book.readStatus;
+
+    readStatus.setAttribute('id','readStatus');
+
+    readBtn.innerHTML = '';
+    readBtn.classList.add('btn');
+    readBtn.setAttribute('id', 'readBtn');
+
+    if(book.readStatus == 'Read'){
+        readBtn.classList.add('greenBtn');
+    }else{
+        readBtn.classList.add('redBtn');
+    }
 
     removeBtn.classList.add('btn');
     removeBtn.setAttribute('id', 'removeBtn');
@@ -88,7 +95,9 @@ function renderBookToLibrary(book) {
     bookWrap.appendChild(author);
     bookWrap.appendChild(pages);
     bookWrap.appendChild(readStatus);
+    bookWrap.appendChild(readBtn);
     bookWrap.appendChild(removeBtn);
+
     collection.appendChild(bookWrap);
 }
 
@@ -99,6 +108,25 @@ document.addEventListener('click', function(e){
         removeFromLibrary(e.target.parentNode.firstChild.innerHTML)
     }
 });
+
+document.addEventListener('click', function(e) {
+    if(e.target && e.target.id == 'readBtn'){
+        const readStatus = document.getElementById('readStatus');
+        const readBtn = document.getElementById('readBtn');
+
+        if(readStatus.textContent == 'Not Read') {
+            readStatus.textContent = 'Read';
+            readBtn.classList.remove('redBtn');
+            readBtn.classList.add('greenBtn');    
+        } else {
+            readStatus.textContent = 'Not Read';
+            readBtn.classList.remove('greenBtn');
+            readBtn.classList.add('redBtn');
+        }
+        
+        
+    }
+})
 
 //Update Local Storage
 function saveToLocal() {

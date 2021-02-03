@@ -8,13 +8,28 @@ body {
 h3 {
     font-size: 24px;
 }
+
 .appTitle {
     font-family: 'Open Sans', sans-serif;
     font-size: 40px;
 }
 
+.mainWrap {
+    display: flex;
+    width: 750px;
+    height: 100%;
+}
+
+.mainChild {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    float: left;
+    margin: 5px;
+}
+
 .formWrap {
-    width: 350px;
+    float: left;
     border: 1px solid;
     padding: 10px;
 }
@@ -58,6 +73,20 @@ label {
     position:relative;
     cursor: pointer;
 }
+
 .btn:active{
     top:0.1em;
+}
+
+.redBtn {
+    background-color: red;
+}
+
+.greenBtn {
+    background-color: green;
+}
+
+.collectionWrap {
+    padding: 10px;
+    border: 1px solid;
 }
